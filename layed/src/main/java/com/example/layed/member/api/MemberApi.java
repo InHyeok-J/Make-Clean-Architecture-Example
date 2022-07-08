@@ -1,13 +1,16 @@
-package com.example.layed.member.web;
+package com.example.layed.member.api;
 
 import com.example.layed.common.response.SuccessResponse;
-import com.example.layed.member.domain.MemberService;
-import com.example.layed.member.dto.LoginRequest;
-import com.example.layed.member.dto.MemberResponse;
-import com.example.layed.member.dto.RegisterMemberRequest;
+import com.example.layed.member.domain.Token;
+import com.example.layed.member.service.MemberService;
+import com.example.layed.member.api.dto.LoginRequest;
+import com.example.layed.member.api.dto.MemberResponse;
+import com.example.layed.member.api.dto.RegisterMemberRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,15 +32,17 @@ public class MemberApi {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request){
-    memberService.login(request);
+  public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+    Token token = memberService.login(request);
 
-    return SuccessResponse.withData("로그인 성공");
+    return SuccessResponse.withData(token);
   }
 
   @GetMapping("")
-  public ResponseEntity<?> getMember(){
-    MemberResponse result = memberService.getMember();
+  public ResponseEntity<?> getMember() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    Long memberId = Long.valueOf(auth.getPrincipal().toString());
+    MemberResponse result = memberService.getMember(memberId);
     return SuccessResponse.withData(result);
   }
 }

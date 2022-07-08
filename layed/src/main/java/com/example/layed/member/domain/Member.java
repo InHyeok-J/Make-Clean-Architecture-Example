@@ -1,24 +1,38 @@
 package com.example.layed.member.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@Entity
+@NoArgsConstructor
+@Table(name = "member")
 public class Member {
 
-  private Long memberId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  private String nickname;
-
+  @Column(name = "email", nullable = false, unique = true)
   private String email;
 
+  @Column(name = "nick_name", nullable = false)
+  private String nickName;
+
+  @Column(nullable = false)
   private String password;
 
   @Builder
-  public Member(Long id,String nickname, String email, String password) {
-    this.memberId = id;
-    this.nickname = nickname;
+  Member(String email, String nickName, String password) {
     this.email = email;
+    this.nickName = nickName;
     this.password = password;
   }
 }
