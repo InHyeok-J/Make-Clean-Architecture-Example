@@ -1,5 +1,6 @@
 package com.example.hexagonal.member.application;
 
+import com.example.hexagonal.common.error.BusinessException;
 import com.example.hexagonal.member.application.port.in.RegisterMemberCommand;
 import com.example.hexagonal.member.application.port.in.RegisterMemberUseCase;
 import com.example.hexagonal.member.application.port.out.LoadMemberPort;
@@ -18,9 +19,8 @@ class RegisterMemberService implements RegisterMemberUseCase {
 
   @Override
   public void register(RegisterMemberCommand command) {
-    System.out.println("----");
     if(loadMemberPort.existByEmail(command.getEmail())){
-      throw new IllegalStateException("이미 존재하는 유저입니다.");
+      throw new BusinessException("이미 존재하는 유저입니다.", 400);
     }
 
     Member member = Member.builder()

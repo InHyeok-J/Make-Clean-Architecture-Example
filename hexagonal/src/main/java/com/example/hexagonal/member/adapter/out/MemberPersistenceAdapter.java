@@ -1,5 +1,6 @@
 package com.example.hexagonal.member.adapter.out;
 
+import com.example.hexagonal.common.error.NotFoundResourceException;
 import com.example.hexagonal.member.application.port.out.LoadMemberPort;
 import com.example.hexagonal.member.application.port.out.SaveMemberPort;
 import com.example.hexagonal.member.domain.Member;
@@ -22,7 +23,7 @@ class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort {
   @Override
   public Member loadMember(MemberId id) {
     JpaMemberEntity memberEntity = jpaMemberRepository.findById(id.value())
-        .orElseThrow(() -> new IllegalStateException("유저 없음"));
+        .orElseThrow(() -> new NotFoundResourceException("유저 없음"));
 
     return memberMapper.mapToDomainMember(memberEntity);
   }
