@@ -9,9 +9,11 @@ import com.example.hexagonal.member.domain.Token;
 import com.example.hexagonal.member.domain.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 class LoginService implements LoginUseCase {
 
   private final LoadMemberPort loadMemberPort;

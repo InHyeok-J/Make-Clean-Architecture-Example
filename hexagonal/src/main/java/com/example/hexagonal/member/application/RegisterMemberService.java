@@ -9,9 +9,11 @@ import com.example.hexagonal.member.domain.Member;
 import com.example.hexagonal.member.domain.SquatDeadBench;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 class RegisterMemberService implements RegisterMemberUseCase {
 
   private final LoadMemberPort loadMemberPort;
