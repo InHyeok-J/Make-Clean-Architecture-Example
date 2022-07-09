@@ -21,10 +21,17 @@ class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort {
   }
 
   @Override
-  public Member loadMember(MemberId id) {
+  public Member loadMemberByMemberId(MemberId id) {
     JpaMemberEntity memberEntity = jpaMemberRepository.findById(id.value())
         .orElseThrow(() -> new NotFoundResourceException("유저 없음"));
 
+    return memberMapper.mapToDomainMember(memberEntity);
+  }
+
+  @Override
+  public Member loadMemberByEmail(String email) {
+    JpaMemberEntity memberEntity = jpaMemberRepository.findByEmail(email)
+        .orElseThrow(()-> new NotFoundResourceException("유저 없음"));
     return memberMapper.mapToDomainMember(memberEntity);
   }
 

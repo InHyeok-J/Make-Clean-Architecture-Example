@@ -6,5 +6,6 @@ import com.example.hexagonal.member.domain.MemberId;
 public interface LoadMemberPort {
 
   boolean existByEmail(String email);
-  Member loadMember(MemberId id);
+  Member loadMemberByEmail(String email);
+  Member loadMemberByMemberId(MemberId id);
 }
