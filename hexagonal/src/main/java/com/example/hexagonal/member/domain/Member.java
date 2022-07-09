@@ -26,4 +26,8 @@ public class Member {
     this.password = password;
     this.nickname = nickname;
   }
+
+  public void changeWeight(SquatDeadBench sdb){
+    this.sdb = sdb;
+  }
 }

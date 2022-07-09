@@ -1,6 +1,7 @@
 package com.example.hexagonal.member.domain;
 
 import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +13,11 @@ public class TokenProvider {
 
   public Token createToken(MemberId memberId, String email){
 
-    HashMap<String, Object> paylpads = new HashMap<>();
-    paylpads.put("memberId", memberId.value());
-    paylpads.put("email", email);
+    Map<String, Object> payloads = new HashMap<>();
+    payloads.put("memberId", memberId.value());
+    payloads.put("email", email);
 
-    String jwt = jwtProvider.accessToken(paylpads);
+    String jwt = jwtProvider.accessToken(payloads);
 
     return new Token(jwt);
   }
